@@ -1,5 +1,7 @@
 use ratatui::{DefaultTerminal, Frame};
 
+mod app;
+
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
     ratatui::run(app)?;
