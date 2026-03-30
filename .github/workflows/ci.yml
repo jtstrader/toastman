@@ -5,8 +5,7 @@ on:
   push:
     branches:
       - main
-      - master
-      - develop
+      - dev 
 
 env:
   CARGO_TERM_COLOR: always
