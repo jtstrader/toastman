@@ -1,22 +1,13 @@
-use ratatui::{DefaultTerminal, Frame};
+use crate::app::App;
 
-mod app;
+pub(crate) mod app;
+pub(crate) mod ui;
 
-fn main() -> color_eyre::Result<()> {
+#[tokio::main]
+async fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
-    ratatui::run(app)?;
+
+    let mut app = App::new()?;
+    ratatui::run(|terminal| app.run(terminal))?;
     Ok(())
-}
-
-fn app(terminal: &mut DefaultTerminal) -> std::io::Result<()> {
-    loop {
-        terminal.draw(render)?;
-        if crossterm::event::read()?.is_key_press() {
-            break Ok(());
-        }
-    }
-}
-
-fn render(frame: &mut Frame) {
-    frame.render_widget("hello world", frame.area());
 }
