@@ -28,6 +28,6 @@ impl Widget for &App {
         tabs.render(area + Offset::new(1, 0), buf);
 
         // Render workspace window
-        self.workspaces[self.selected_workspace].render(area, buf);
+        self.workspaces[self.selected_workspace].render(area + Offset::new(1, 1), buf);
     }
 }
