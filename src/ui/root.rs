@@ -9,6 +9,8 @@ use crate::app::App;
 
 impl Widget for &App {
     fn render(self, area: Rect, buf: &mut Buffer) {
+        assert!(self.selected_workspace < self.workspaces.len());
+
         // Main window
         let title = Line::from("Toastman".bold());
         let block = Block::bordered()
@@ -24,5 +26,8 @@ impl Widget for &App {
             .divider(symbols::DOT)
             .padding(" ", " ");
         tabs.render(area + Offset::new(1, 0), buf);
+
+        // Render workspace window
+        self.workspaces[self.selected_workspace].render(area, buf);
     }
 }
