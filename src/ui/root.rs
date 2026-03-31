@@ -19,7 +19,7 @@ impl Widget for &App {
         // Tabs
         let tabs = Tabs::new(self.workspaces.iter().map(|w| w.root.name.clone()))
             .style(Color::White)
-            .highlight_style(Style::default().magenta().on_black().bold())
+            .highlight_style(Style::default().green().bold())
             .select(self.selected_workspace)
             .divider(symbols::DOT)
             .padding(" ", " ");
