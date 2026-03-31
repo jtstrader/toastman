@@ -2,7 +2,7 @@ use ratatui::{
     layout::Offset,
     prelude::*,
     symbols::border,
-    widgets::{Block, Tabs},
+    widgets::{Block, ListState, Tabs},
 };
 
 use crate::app::App;
@@ -16,10 +16,11 @@ impl Widget for &App {
         let block = Block::bordered()
             .title(title.centered())
             .border_set(border::THICK);
+        let inner_area = block.inner(area);
         block.render(area, buf);
 
         // Tabs
-        let tabs = Tabs::new(self.workspaces.iter().map(|w| w.root.name.clone()))
+        let tabs = Tabs::new(self.workspaces.iter().map(|w| w.name.clone()))
             .style(Color::White)
             .highlight_style(Style::default().green().bold())
             .select(self.selected_workspace)
@@ -28,6 +29,7 @@ impl Widget for &App {
         tabs.render(area + Offset::new(1, 0), buf);
 
         // Render workspace window
-        self.workspaces[self.selected_workspace].render(area + Offset::new(1, 1), buf);
+        let mut state = ListState::default().with_selected(Some(0));
+        self.workspaces[self.selected_workspace].render(inner_area, buf, &mut state);
     }
 }
