@@ -1,5 +1,6 @@
 use ratatui::{
     prelude::{Buffer, Constraint, Layout, Rect, StatefulWidget, Widget},
+    style::Style,
     symbols::border,
     widgets::{Block, List, ListDirection, ListState},
 };
@@ -27,6 +28,7 @@ impl StatefulWidget for &Workspace {
         let items = self.requests.iter().map(Request::to_sidebar_display);
         let sidebar_items = List::new(items)
             .scroll_padding(1)
+            .highlight_symbol("> ")
             .direction(ListDirection::TopToBottom);
 
         // Render sidebar
