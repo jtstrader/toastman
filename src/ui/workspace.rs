@@ -11,7 +11,10 @@ impl StatefulWidget for &Workspace {
 
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State) {
         // Sidebar layout
-        let [sidebar_layout] = area.layout(&Layout::horizontal([Constraint::Percentage(20)]));
+        let [sidebar_layout, request_layout] = area.layout(&Layout::horizontal([
+            Constraint::Percentage(20),
+            Constraint::Percentage(80),
+        ]));
 
         // Sidebar container
         let sidebar_title = "APIs";
@@ -26,8 +29,13 @@ impl StatefulWidget for &Workspace {
             .scroll_padding(1)
             .direction(ListDirection::TopToBottom);
 
-        // Render
+        // Render sidebar
         sidebar.render(sidebar_layout, buf);
         <List as StatefulWidget>::render(sidebar_items, inner_area, buf, state);
+
+        // Render request in view
+        if let Some(request_idx) = state.selected() {
+            self.requests[request_idx].render(request_layout, buf);
+        }
     }
 }
